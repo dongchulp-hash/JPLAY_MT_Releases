@@ -1,6 +1,10 @@
 # JPLAY Music Teller Releases
 
-JPLAY Music Teller의 지인·동호인 대상 설치판을 제공하는 공개 배포 저장소입니다.
+JPLAY Music Teller는 JPLAY가 HQPlayer로 재생하는 현재 곡을 감지하고, 부족한 음악 정보를 보완해 한국어 감상 해설을 만들어 주는 로컬 웹앱입니다. 로컬 MinimServer 음원과 TIDAL 재생을 지원하며, 앨범 아트와 재생 상태를 보면서 이전 곡·재생/일시정지·다음 곡을 제어할 수 있습니다.
+
+감상 가이드, 음악 에세이, 작품 해설, 오디오파일 관점 중 원하는 스타일을 선택할 수 있으며, 가사가 발견되는 곡은 한국어 가사 해설도 만들 수 있습니다. Mac 또는 Windows PC에서 서버가 실행되고, 같은 네트워크의 iPad·iPhone·PC 브라우저에서 화면을 볼 수 있습니다.
+
+이 저장소는 JPLAY Music Teller의 지인·동호인 대상 설치판을 제공하는 공개 배포 저장소입니다.
 
 프로그램 소스와 개발 문서는 [JPLAY_MT](https://github.com/dongchulp-hash/JPLAY_MT) 저장소에서 관리합니다. 이 저장소의 **Releases** 메뉴에는 검증된 macOS·Windows 설치 파일과 SHA-256 체크섬만 게시합니다.
 
@@ -10,6 +14,8 @@ JPLAY Music Teller의 지인·동호인 대상 설치판을 제공하는 공개 
 - macOS Intel x86_64
 - Windows 10·11 x64
 - HQPlayer 4·5·6 네트워크 제어 환경
+
+HQPlayer에서 네트워크 제어를 허용해야 하며, MusicTeller를 실행하는 Mac/PC와 HQPlayer가 같은 사설 네트워크에 있어야 합니다. iPad나 iPhone에서도 보려면 해당 기기 역시 같은 네트워크에 연결합니다.
 
 ## 설치 파일 받기
 
@@ -22,6 +28,41 @@ JPLAY Music Teller의 지인·동호인 대상 설치판을 제공하는 공개 
 현재 V5 설치판은 지인 검증을 위한 베타입니다. Release가 게시되기 전에는 이 저장소에서 받을 수 있는 공식 설치 파일이 없습니다.
 
 관리자는 이 저장소의 `Actions → Publish JPLAY_MT installers → Run workflow`에서 원본 소스 참조와 Release 태그를 확인한 뒤 세 플랫폼 설치판을 자동 빌드·게시할 수 있습니다.
+
+## 처음 실행 전에 준비할 것
+
+### 1. MusicBrainz 연락처
+
+MusicBrainz는 곡·작품·작곡가·연주자 정보를 보완할 때 사용합니다. 일반 조회에는 API 키나 MusicBrainz 계정이 필요하지 않습니다. 대신 서비스 정책에 맞는 요청 식별을 위해 연락 가능한 이메일 주소 또는 개인 웹 주소 하나를 설정 화면에 입력합니다.
+
+- MusicBrainz API 안내: <https://musicbrainz.org/doc/MusicBrainz_API>
+
+### 2. AI API 키 하나 이상
+
+한국어 해설을 만들려면 아래 제공자 중 **하나 이상의 개발자 API 키**가 필요합니다. 세 가지를 모두 준비할 필요는 없으며, 키가 등록된 모델만 선택해 사용할 수 있습니다.
+
+- OpenAI: [API 키 발급](https://platform.openai.com/api-keys) 후 [Billing](https://platform.openai.com/settings/organization/billing/overview)에서 결제 수단이나 크레딧을 확인합니다.
+- Anthropic Claude: [Claude Console](https://platform.claude.com/)에서 계정을 만든 뒤 API 키와 사용 크레딧을 설정합니다.
+- Google Gemini: [Google AI Studio API Keys](https://aistudio.google.com/apikey)에서 Gemini API 키를 만듭니다. 무료 할당량과 사용 가능한 모델은 계정·지역·현재 정책에 따라 달라질 수 있습니다.
+
+ChatGPT Plus/Pro, Claude Pro/Max, Google AI 요금제 같은 일반 사용자 구독은 개발자 API 이용권과 별개입니다. 실제 해설 생성에는 선택한 제공자의 API 요금 또는 무료 할당량이 적용됩니다.
+
+LRCLIB은 가사 검색에 사용하며 별도의 API 키가 필요하지 않습니다. 다만 모든 곡의 가사가 제공되는 것은 아닙니다.
+
+API 키를 GitHub, 메신저, 스크린샷 또는 이슈에 올리지 마세요. 첫 실행 설정 화면에만 입력하면 macOS Keychain 또는 Windows DPAPI 저장소에 보관됩니다.
+
+## 간단한 설치와 사용법
+
+1. 위의 **설치 파일 받기**에서 운영체제에 맞는 설치 파일을 내려받아 설치합니다.
+2. HQPlayer 설정에서 네트워크 제어를 허용하고 JPLAY로 곡을 재생합니다.
+3. 응용 프로그램의 `JPLAY Music Teller`를 처음 한 번 실행합니다.
+4. 브라우저 설정 화면에 MusicBrainz 연락처와 사용할 AI API 키를 입력하고 `안전하게 저장하고 시작`을 누릅니다.
+5. 상단 장치 버튼을 눌러 현재 곡을 재생하는 HQPlayer를 선택합니다. 자동으로 발견되지 않으면 HQPlayer의 IP 주소나 호스트명을 직접 추가합니다.
+6. 화면에 현재 곡이 나타나면 필요에 따라 `곡 정보 추가 찾기`를 눌러 MusicBrainz 정보를 보완합니다.
+7. MusicTeller 카드에서 AI 모델과 해설 스타일을 선택한 뒤 `한국어 해설 만들기`를 누릅니다.
+8. 가사가 있는 곡은 `가사 해설`을 눌러 가사의 의미와 맥락을 한국어로 읽습니다.
+
+서버 Mac/PC에서는 `http://127.0.0.1:8765`로 접속합니다. 같은 네트워크의 iPad·iPhone에서는 `http://서버의-IP주소:8765`를 엽니다. Windows 방화벽 안내가 나타나면 개인 네트워크에서만 접근을 허용합니다.
 
 ## 보안 안내
 
