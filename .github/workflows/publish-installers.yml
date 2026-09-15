@@ -1,0 +1,108 @@
+name: Publish JPLAY_MT installers
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: JPLAY_MT source branch, tag, or commit
+        required: true
+        default: main
+      release_tag:
+        description: Release tag to create in this repository
+        required: true
+        default: v5.0.0-beta.1
+      prerelease:
+        description: Publish as a prerelease
+        required: true
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+jobs:
+  macos:
+    strategy:
+      matrix:
+        include:
+          - runner: macos-15-intel
+            arch: x86_64
+            script: build-intel-release.sh
+          - runner: macos-14
+            arch: arm64
+            script: build-apple-silicon-release.sh
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: dongchulp-hash/JPLAY_MT
+          ref: ${{ inputs.source_ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build macOS installer
+        shell: zsh {0}
+        run: |
+          export JPLAY_MT_BUILD_PYTHON="$(python3 -c 'import sys; print(sys.executable)')"
+          zsh "./scripts/macos/${{ matrix.script }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JPLAY_MT-macOS-${{ matrix.arch }}
+          path: |
+            dist/JPLAY_MT-*-macOS-${{ matrix.arch }}.pkg
+            dist/JPLAY_MT-*-macOS-${{ matrix.arch }}.dmg
+            dist/SHA256SUMS-macOS-${{ matrix.arch }}.txt
+          if-no-files-found: error
+
+  windows:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: dongchulp-hash/JPLAY_MT
+          ref: ${{ inputs.source_ref }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Inno Setup
+        run: choco install innosetup --yes --no-progress
+      - name: Build Windows installer
+        shell: pwsh
+        run: .\scripts\windows\build-windows-release.ps1 -PythonCommand python
+      - uses: actions/upload-artifact@v4
+        with:
+          name: JPLAY_MT-Windows-x64
+          path: |
+            dist/JPLAY_MT-*-Windows-x64-Setup.exe
+            dist/SHA256SUMS-Windows-x64.txt
+          if-no-files-found: error
+
+  release:
+    needs: [macos, windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+      - name: Publish release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          SOURCE_REF: ${{ inputs.source_ref }}
+          PRERELEASE: ${{ inputs.prerelease }}
+        shell: bash
+        run: |
+          prerelease=()
+          if [[ "$PRERELEASE" == "true" ]]; then
+            prerelease=(--prerelease)
+          fi
+          notes="JPLAY_MT ${SOURCE_REF}에서 자동 빌드한 지인·동호인 검증용 설치판입니다. 설치 전 README의 보안 및 API 비용 안내를 확인하세요."
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" release-assets/* --clobber
+          else
+            gh release create "$RELEASE_TAG" release-assets/* \
+              --title "JPLAY Music Teller $RELEASE_TAG" \
+              --notes "$notes" "${prerelease[@]}"
+          fi

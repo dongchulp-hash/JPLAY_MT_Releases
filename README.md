@@ -21,6 +21,8 @@ JPLAY Music Teller의 지인·동호인 대상 설치판을 제공하는 공개 
 
 현재 V5 설치판은 지인 검증을 위한 베타입니다. Release가 게시되기 전에는 이 저장소에서 받을 수 있는 공식 설치 파일이 없습니다.
 
+관리자는 이 저장소의 `Actions → Publish JPLAY_MT installers → Run workflow`에서 원본 소스 참조와 Release 태그를 확인한 뒤 세 플랫폼 설치판을 자동 빌드·게시할 수 있습니다.
+
 ## 보안 안내
 
 - 설치 파일은 반드시 이 저장소의 GitHub Release에서 받으세요.
