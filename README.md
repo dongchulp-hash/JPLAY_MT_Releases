@@ -6,12 +6,12 @@ JPLAY Music Teller는 JPLAY가 HQPlayer로 재생하는 현재 곡을 감지하�
 
 이 저장소는 JPLAY Music Teller의 지인·동호인 대상 설치판을 제공하는 공개 배포 저장소입니다.
 
-프로그램 소스와 개발 문서는 [JPLAY_MT](https://github.com/dongchulp-hash/JPLAY_MT) 저장소에서 관리합니다. 이 저장소의 **Releases** 메뉴에는 검증된 macOS·Windows 설치 파일과 SHA-256 체크섬만 게시합니다.
+프로그램 소스와 개발 문서는 비공개 저장소에서 관리합니다. 이 공개 저장소의 **Releases** 메뉴에는 검증된 macOS·Windows 설치 파일과 SHA-256 체크섬만 게시합니다.
 
 ## 지원 환경
 
-- macOS Apple Silicon(M1 이후)
-- macOS Intel x86_64
+- macOS Apple Silicon(M1 이후, macOS 12 이상)
+- macOS Intel x86_64(macOS 10.15 Catalina 이상)
 - Windows 10·11 x64
 - HQPlayer 4·5·6 네트워크 제어 환경
 
@@ -19,15 +19,13 @@ HQPlayer에서 네트워크 제어를 허용해야 하며, MusicTeller를 실행
 
 ## 설치 파일 받기
 
-오른쪽의 **Releases** 또는 [최신 Release](https://github.com/dongchulp-hash/JPLAY_MT_Releases/releases/latest)에서 운영체제에 맞는 파일을 내려받습니다.
+오른쪽의 **Releases** 또는 [현재 권장 베타 v5.0.0-beta.4](https://github.com/dongchulp-hash/JPLAY_MT_Releases/releases/tag/v5.0.0-beta.4)에서 운영체제에 맞는 파일을 내려받습니다.
 
 - Apple Silicon Mac: `JPLAY_MT-버전-macOS-arm64.pkg`
 - Intel Mac: `JPLAY_MT-버전-macOS-x86_64.pkg`
 - Windows 10·11: `JPLAY_MT-버전-Windows-x64-Setup.exe`
 
-현재 V5 설치판은 지인 검증을 위한 베타입니다. Release가 게시되기 전에는 이 저장소에서 받을 수 있는 공식 설치 파일이 없습니다.
-
-관리자는 이 저장소의 `Actions → Publish JPLAY_MT installers → Run workflow`에서 원본 소스 참조와 Release 태그를 확인한 뒤 세 플랫폼 설치판을 자동 빌드·게시할 수 있습니다.
+현재 V5 설치판은 지인 검증을 위한 베타입니다. Intel Mac 사용자는 Catalina에서 Finder 실행 문제가 수정된 `v5.0.0-beta.4` 이상을 사용해야 합니다.
 
 ## 처음 실행 전에 준비할 것
 
@@ -83,4 +81,4 @@ API 키를 GitHub, 메신저, 스크린샷 또는 이슈에 올리지 마세요.
 
 이 저장소는 개인이 개발한 비공식 프로젝트입니다. JPLAY, Signalyst/HQPlayer, OpenAI, Anthropic 또는 Google과 제휴하거나 공식 지원을 받지 않습니다. 각 제품명과 상표는 해당 소유자에게 있습니다.
 
-문제 제보와 개발 관련 내용은 [JPLAY_MT Issues](https://github.com/dongchulp-hash/JPLAY_MT/issues)를 이용해 주세요. API 키, 이메일 주소, 스트리밍 URL 토큰이나 개인 음원 경로는 이슈에 올리지 마세요.
+문제를 제보할 때는 사용한 Release 버전, 운영체제 버전과 증상을 전달해 주세요. API 키, 이메일 주소, 스트리밍 URL 토큰이나 개인 음원 경로는 공개 게시물에 올리지 마세요.
