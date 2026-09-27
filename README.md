@@ -19,13 +19,20 @@ HQPlayer에서 네트워크 제어를 허용해야 하며, MusicTeller를 실행
 
 ## 설치 파일 받기
 
-오른쪽의 **Releases** 또는 [현재 권장 베타 v5.0.0-beta.5](https://github.com/dongchulp-hash/JPLAY_MT_Releases/releases/tag/v5.0.0-beta.5)에서 운영체제에 맞는 파일을 내려받습니다.
+오른쪽의 **Releases** 또는 [현재 권장 베타 v5.0.0-beta.7](https://github.com/dongchulp-hash/JPLAY_MT_Releases/releases/tag/v5.0.0-beta.7)에서 운영체제에 맞는 파일을 내려받습니다.
 
 - Apple Silicon Mac: `JPLAY_MT-버전-macOS-arm64.pkg`
 - Intel Mac: `JPLAY_MT-버전-macOS-x86_64.pkg`
 - Windows 10·11: `JPLAY_MT-버전-Windows-x64-Setup.exe`
 
-현재 V5 설치판은 지인 검증을 위한 베타입니다. Intel Mac 사용자는 Catalina 지원, 앱 캐시 갱신, 설치 후 최초 실행이 반영된 `v5.0.0-beta.5` 이상을 사용하세요.
+현재 V5 설치판은 지인 검증을 위한 베타입니다. `v5.0.0-beta.7`은 Intel Mac Catalina 지원과 설치 후 최초 실행, 최신 AI 모델 구성을 포함합니다.
+
+### AI 모델 구성
+
+- `GPT-5.6 Luna`: 빠른 기본 해설
+- `GPT-6 Sol`: 고급 해설, GPT-5.6 Luna와 같은 OpenAI API 키 사용
+- `Claude Sonnet 5`: 속도와 문장 품질의 균형형 해설
+- `Gemini 3.8 Flash`: 풍부한 해설, 계정별 무료 할당량 사용 가능
 
 ## 처음 실행 전에 준비할 것
 
